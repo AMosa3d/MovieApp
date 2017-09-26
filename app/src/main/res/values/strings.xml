@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MovieApp</string>
+    <string name="my_api_key">default</string>
+    <string name="error_message">Some Error Occured, Please Try Again!</string>
+    <string name="extra_movie_id">MovieObject</string>
+    <string name="default_menu_title">Top Rated</string>
+</resources>
