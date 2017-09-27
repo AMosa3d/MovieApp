@@ -26,7 +26,7 @@ public final class NetworkUtil {
 
         final String API_KEY_PARAM = "api_key";
 
-        String API = "6ab37c9cb766d435e6955925288ec966";//Resources.getSystem().getString(R.string.my_api_key);
+        String API = "default";//Resources.getSystem().getString(R.string.my_api_key);
         Uri uri = Uri.parse(MOVIE_API_URL).buildUpon()
                 .appendPath(sortMethod)
                 .appendQueryParameter(API_KEY_PARAM,API)
