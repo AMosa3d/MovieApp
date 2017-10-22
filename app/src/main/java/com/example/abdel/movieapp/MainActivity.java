@@ -1,7 +1,6 @@
 package com.example.abdel.movieapp;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,16 +12,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.abdel.movieapp.Adapters.MovieAdapter;
+import com.example.abdel.movieapp.AsyncTasks.MovieAsyncTask;
+import com.example.abdel.movieapp.Interfaces.HomeUIManagerInterface;
 import com.example.abdel.movieapp.Interfaces.MovieRecyclerInterface;
 import com.example.abdel.movieapp.Models.Movie;
-import com.example.abdel.movieapp.utilities.JSONUtil;
-import com.example.abdel.movieapp.utilities.NetworkUtil;
 
 
-import java.net.URL;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements MovieRecyclerInterface {
+public class MainActivity extends AppCompatActivity implements MovieRecyclerInterface,HomeUIManagerInterface {
 
     ProgressBar mLoadingProgressBar;
     TextView mErrorMessageDisplayer;
@@ -55,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements MovieRecyclerInte
 
     void loadMoviesData(){
         mMovieRecyclerView.setVisibility(View.INVISIBLE);   //hide the recycler view in case of updating it from sorting method to another
-        new MovieAsyncTask().execute(currentSortingMethod);
+        new MovieAsyncTask(this).execute(currentSortingMethod);
     }
 
     void showErrorMessage (){
@@ -98,6 +96,8 @@ public class MainActivity extends AppCompatActivity implements MovieRecyclerInte
         return super.onOptionsItemSelected(item);
     }
 
+    //*************************************** Handel Interface Section ***********************************************//
+
     @Override
     public void onClick(Movie movie) {
         Intent intent = new Intent(MainActivity.this,DetailActivity.class);
@@ -105,49 +105,19 @@ public class MainActivity extends AppCompatActivity implements MovieRecyclerInte
         startActivity(intent);
     }
 
-    class MovieAsyncTask extends AsyncTask<String,Void,List<Movie>>
-    {
+    @Override
+    public void showError() {
+        showErrorMessage();
+    }
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mLoadingProgressBar.setVisibility(View.VISIBLE);
-        }
+    @Override
+    public void showData(List<Movie> moviesList) {
+        showMoviesData();
+        mMovieAdapter.setMoviesList(moviesList);
+    }
 
-        @Override
-        protected List<Movie> doInBackground(String... params) {
-
-            if (params == null)
-                return null;
-
-            String searchMethod = params[0];
-
-            URL movieAPIURL = NetworkUtil.buildURL(searchMethod);
-
-            try {
-                String movieJSONDataString = NetworkUtil.getDataFromURL(movieAPIURL);
-
-                List<Movie> moviesListFromJSON = JSONUtil.getMoviesFromJSON(movieJSONDataString);
-
-                return moviesListFromJSON;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(List<Movie> movies) {
-            mLoadingProgressBar.setVisibility(View.INVISIBLE);
-
-            if (movies == null)
-                showErrorMessage();
-            else
-            {
-                showMoviesData();
-                mMovieAdapter.setMoviesList(movies);
-            }
-
-        }
+    @Override
+    public void HandelProgressBar(int visibility) {
+        mLoadingProgressBar.setVisibility(visibility);
     }
 }

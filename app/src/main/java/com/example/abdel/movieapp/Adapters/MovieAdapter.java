@@ -73,10 +73,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         }
 
         void bind(String path){
-            String preferredSize = "w185";
+            String preferredSize = "w500";
             Uri uri = NetworkUtil.buildImageUri(path,preferredSize);
 
-            Picasso.with(context).load(uri).into(imageView);
+            Picasso.with(context).load(uri).placeholder(R.mipmap.ic_launcher).into(imageView);
         }
     }
 }
