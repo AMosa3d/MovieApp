@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.abdel.movieapp.Interfaces.MovieRecyclerInterface;
+import com.example.abdel.movieapp.Interfaces.HomeRecyclerViewsInterface;
 import com.example.abdel.movieapp.Models.Movie;
 import com.example.abdel.movieapp.R;
 import com.example.abdel.movieapp.utilities.NetworkUtil;
@@ -22,14 +22,14 @@ import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder>{
 
-    private MovieRecyclerInterface mMovieRecyclerInterface;
+    private HomeRecyclerViewsInterface mHomeRecyclerViewsInterface;
 
     private List<Movie> moviesList;
 
     private Context context;
 
-    public MovieAdapter(MovieRecyclerInterface mMovieRecyclerInterface, Context context) {
-        this.mMovieRecyclerInterface = mMovieRecyclerInterface;
+    public MovieAdapter(HomeRecyclerViewsInterface mHomeRecyclerViewsInterface, Context context) {
+        this.mHomeRecyclerViewsInterface = mHomeRecyclerViewsInterface;
         this.context = context;
     }
 
@@ -69,7 +69,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
         @Override
         public void onClick(View v) {
-            mMovieRecyclerInterface.onClick(moviesList.get(getAdapterPosition()));
+            mHomeRecyclerViewsInterface.onClick(moviesList.get(getAdapterPosition()));
         }
 
         void bind(String path){

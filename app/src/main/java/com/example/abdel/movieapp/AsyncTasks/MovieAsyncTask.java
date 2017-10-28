@@ -1,6 +1,5 @@
 package com.example.abdel.movieapp.AsyncTasks;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.view.View;
 

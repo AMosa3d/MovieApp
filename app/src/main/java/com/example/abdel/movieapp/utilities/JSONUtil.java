@@ -1,6 +1,8 @@
 package com.example.abdel.movieapp.utilities;
 
 import com.example.abdel.movieapp.Models.Movie;
+import com.example.abdel.movieapp.Models.Review;
+import com.example.abdel.movieapp.Models.Trailer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,6 +17,54 @@ import java.util.List;
 
 
 public final class JSONUtil {
+
+    public static List<Trailer> getTrailersFromJSON (String JSONString) throws JSONException
+    {
+        final String TRAILER_LIST = "results";
+        final String TRAILER_ID = "id";
+        final String TRAILER_KEY = "key";
+
+        JSONObject allData = new JSONObject(JSONString);
+        JSONArray list = allData.getJSONArray(TRAILER_LIST);
+
+        List<Trailer> trailersList = new ArrayList<>();
+
+        for (int i=0;i<list.length();i++)
+        {
+            JSONObject currentObject = list.getJSONObject(i);
+            String id = currentObject.getString(TRAILER_ID);
+            String key = currentObject.getString(TRAILER_KEY);
+
+            trailersList.add(new Trailer(id,key));
+        }
+
+        return trailersList;
+    }
+
+    public static List<Review> getReviewsFromJSON (String JSONString) throws JSONException
+    {
+        final String REVIEW_LIST = "results";
+        final String REVIEW_ID = "id";
+        final String REVIEW_AUTHOR = "author";
+        final String REVIEW_CONTENT = "content";
+
+        JSONObject allData = new JSONObject(JSONString);
+        JSONArray list = allData.getJSONArray(REVIEW_LIST);
+
+        List<Review> reviewsList = new ArrayList<>();
+
+        for (int i=0;i<list.length();i++)
+        {
+            JSONObject currentObject = list.getJSONObject(i);
+            String id = currentObject.getString(REVIEW_ID);
+            String author = currentObject.getString(REVIEW_AUTHOR);
+            String content = currentObject.getString(REVIEW_CONTENT);
+
+            reviewsList.add(new Review(id,author,content));
+        }
+
+        return reviewsList;
+    }
 
     public static List<Movie> getMoviesFromJSON (String JSONString) throws JSONException {
         final String MOVIE_LIST = "results";
@@ -41,15 +91,13 @@ public final class JSONUtil {
             String date = currentObject.getString(MOVIE_DATE);
             String rating = currentObject.getString(MOVE_RATING);
 
-            Movie movie = new Movie(id,
+            moviesList.add(new Movie(id,
                     title,
                     poster,
                     overview,
                     date,
                     rating
-            );
-
-            moviesList.add(movie);
+            ));
         }
         return moviesList;
     }

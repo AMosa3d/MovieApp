@@ -1,12 +1,8 @@
 package com.example.abdel.movieapp.utilities;
 
-import android.content.res.Resources;
 import android.net.Uri;
-import android.os.Build;
-
 
 import com.example.abdel.movieapp.BuildConfig;
-import com.example.abdel.movieapp.R;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,7 +18,7 @@ import java.util.Scanner;
 
 public final class NetworkUtil {
 
-    public static URL buildURL (String sortMethod)
+    public static URL buildURL (String urlString)
     {
         final String MOVIE_API_URL = "https://api.themoviedb.org/3/movie/";
 
@@ -31,7 +27,7 @@ public final class NetworkUtil {
         final String API = BuildConfig.API_KEY;
 
         Uri uri = Uri.parse(MOVIE_API_URL).buildUpon()
-                .appendPath(sortMethod)
+                .appendEncodedPath(urlString)
                 .appendQueryParameter(API_KEY_PARAM,API)
                 .build();
 

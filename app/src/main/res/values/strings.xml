@@ -2,5 +2,22 @@
     <string name="app_name">MovieApp</string>
     <string name="error_message">Some Error Occured, Please Try Again!</string>
     <string name="extra_movie_id">MovieObject</string>
+    <string name="extra_movie_fav_id">FavObject</string>
     <string name="default_menu_title">Top Rated</string>
+    <string name="menu_setting_title">Settings</string>
+    <string name="trailer_headline">Trailers : </string>
+    <string name="review_headline">Reviews : </string>
+    <string name="pref_title">Sorting Method</string>
+    <string name="pref_key">sorting_method</string>
+    <string name="pref_default_value">Popular</string>
+
+    <string name="pref_most_popular_title">Popular</string>
+    <string name="pref_top_rated_title">Top Rated</string>
+    <string name="pref_favorite_title">Favorite</string>
+
+    <string name="pref_most_popular_value">popular</string>
+    <string name="pref_top_rated_value">top_rated</string>
+    <string name="pref_favorite_value">favorite</string>
+
+
 </resources>

@@ -21,9 +21,15 @@
         <activity android:name=".DetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"
-                />
+                android:value=".MainActivity" />
         </activity>
+
+        <provider
+            android:name=".Data.MovieProvider"
+            android:authorities="com.example.abdel.movieapp"
+            android:exported="false" />
+
+        <activity android:name=".SettingActivity"></activity>
     </application>
 
 </manifest>

@@ -6,6 +6,6 @@ import com.example.abdel.movieapp.Models.Movie;
  * Created by abdel on 9/26/2017.
  */
 
-public interface MovieRecyclerInterface {
+public interface HomeRecyclerViewsInterface {
     void onClick (Movie movie);
 }
