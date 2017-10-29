@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,10 +35,13 @@ public class DetailActivity extends AppCompatActivity implements DetailManagerIn
 
     final String MOVIE_BUNDLE_KEY = "currentMovieObject";
     final String FAV_BUNDLE_KEY = "currentFavMovieObject";
+    final String SCROLLVIEW_POSITION_BUNDLE_KEY = "scrollviewPosition";
     int isFav = 0;
+
 
     TextView mTitleTextView,mReleaseDateTextView,mOverViewTextView,mRatingTextView,mErrorMessageTextView,mHeadlineTrailer,mHeadlineReview;
     ImageView mPosterImageView,mFavouriteImageView;
+    ScrollView mScrollView;
 
     NonScrollableListView mTrailersListView;
     NonScrollableExpandableListView mReviewsListView;
@@ -52,6 +56,7 @@ public class DetailActivity extends AppCompatActivity implements DetailManagerIn
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        mScrollView = (ScrollView) findViewById(R.id.detail_scrollview);
         mTitleTextView = (TextView) findViewById(R.id.tv_title);
         mPosterImageView = (ImageView) findViewById(R.id.im_poster);
         mHeadlineTrailer = (TextView) findViewById(R.id.headline_trailer);
@@ -75,6 +80,7 @@ public class DetailActivity extends AppCompatActivity implements DetailManagerIn
         {
             currentMovie = savedInstanceState.getParcelable(MOVIE_BUNDLE_KEY);
             isFav = savedInstanceState.getInt(FAV_BUNDLE_KEY);
+            mScrollView.setVerticalScrollbarPosition(savedInstanceState.getInt(SCROLLVIEW_POSITION_BUNDLE_KEY));
             setDataToLayoutComponents();
             setTrailersAndReviewsData();
             return;
@@ -150,9 +156,9 @@ public class DetailActivity extends AppCompatActivity implements DetailManagerIn
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-
         outState.putParcelable(MOVIE_BUNDLE_KEY,currentMovie);
         outState.putInt(FAV_BUNDLE_KEY,isFav);
+        outState.putInt(SCROLLVIEW_POSITION_BUNDLE_KEY,mScrollView.getVerticalScrollbarPosition());
         super.onSaveInstanceState(outState);
     }
 
@@ -242,7 +248,9 @@ public class DetailActivity extends AppCompatActivity implements DetailManagerIn
     public void onTrailerClick(Trailer trailer) {
         Uri youtubeLinkUri = Uri.parse("http://www.youtube.com/watch?v=" + trailer.getKey());
         Intent youtubeIntent = new Intent(Intent.ACTION_VIEW, youtubeLinkUri);
-        startActivity(youtubeIntent);
+
+        if(youtubeIntent.resolveActivity(getPackageManager()) != null)
+            startActivity(youtubeIntent);
     }
 
 }
