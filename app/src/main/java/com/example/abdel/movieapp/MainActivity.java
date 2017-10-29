@@ -37,11 +37,14 @@ public class MainActivity extends AppCompatActivity implements
     TextView mErrorMessageDisplayer;
     RecyclerView mMovieRecyclerView;
     MovieAdapter mMovieAdapter;
+    GridLayoutManager mGridLayoutManager;
 
     ArrayList<Movie> currentMovies;
 
-    String currentSortingMethod = "favorite";
+    String currentSortingMethod = "popular";
     final String MOVIES_BUNDLE_KEY = "MoviesList";
+    final String RECYCLER_POSITION = "recyclerPosition";
+    int currentPosition= 0;
 
     final int GRID_NUMBER_OF_COLUMNS = 2;
     final int MOVIE_LOADER_ID = 55;
@@ -58,7 +61,8 @@ public class MainActivity extends AppCompatActivity implements
 
         mMovieAdapter = new MovieAdapter(this,this);
 
-        mMovieRecyclerView.setLayoutManager(new GridLayoutManager(this,GRID_NUMBER_OF_COLUMNS));
+        mGridLayoutManager = new GridLayoutManager(this,GRID_NUMBER_OF_COLUMNS);
+        mMovieRecyclerView.setLayoutManager(mGridLayoutManager);
 
         mMovieRecyclerView.setHasFixedSize(true);
 
@@ -69,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements
         if(savedInstanceState != null)
         {
             currentMovies = savedInstanceState.getParcelableArrayList(MOVIES_BUNDLE_KEY);
+            currentPosition = savedInstanceState.getInt(RECYCLER_POSITION);
+            mMovieRecyclerView.scrollToPosition(currentPosition);
             mMovieAdapter.setMoviesList(currentMovies);
             return;
         }
@@ -87,9 +93,12 @@ public class MainActivity extends AppCompatActivity implements
         super.onStart();
     }
 
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putParcelableArrayList(MOVIES_BUNDLE_KEY,currentMovies);
+        currentPosition = mGridLayoutManager.findFirstVisibleItemPosition();
+        outState.putInt(RECYCLER_POSITION,currentPosition);
 
         super.onSaveInstanceState(outState);
     }

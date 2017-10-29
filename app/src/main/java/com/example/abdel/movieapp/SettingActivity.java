@@ -18,6 +18,8 @@ public class SettingActivity extends PreferenceActivity implements Preference.On
         Preference mPreference = findPreference(getString(R.string.pref_key));
 
 
+        if (mPreference == null)
+            return;
         mPreference.setOnPreferenceChangeListener(this);
 
         //get the current value or the default

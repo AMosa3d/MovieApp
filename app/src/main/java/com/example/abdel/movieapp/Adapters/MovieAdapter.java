@@ -78,5 +78,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
             Picasso.with(context).load(uri).placeholder(R.mipmap.ic_launcher).into(imageView);
         }
+
+
     }
 }
